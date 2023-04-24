@@ -1,0 +1,24 @@
+#配置端口和上下文路径
+server:
+  port: 8080
+  servlet:
+    context-path: /
+#配置数据库，连接服务器需要加上?characterEncoding=utf-8&serverTimezone=UTC&&useSSL=false
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://39.105.168.84:3306/supermarketmanager?characterEncoding=utf-8&serverTimezone=UTC&&useSSL=false
+    username: study
+    password: taylor1989swift.
+  #配置视图解析器
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+#配置mybatis别名和mapper文件位置
+mybatis:
+  type-aliases-package: com.jxh.domain
+#配置日志,trace可以看查询结果
+logging:
+  level:
+    com.jxh: trace
+

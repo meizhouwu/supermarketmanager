@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义mapper接口路径 -->
+<mapper namespace="com.jxh.mapper.SupplierMapper">
+    <!--id的值保证Mapper接口的方法名一值-->
+
+<!--    List<Supplier> getSupplierList();-->
+    <select id="getSupplierList" resultType="supplier">
+        select *
+        from t_supplier;
+    </select>
+
+<!--    Supplier getSupplierById(Long id);-->
+    <select id="getSupplierById" resultType="supplier">
+        select *
+        from t_supplier
+        where id=#{id};
+    </select>
+
+<!--    void addSupplier(Supplier supplier);-->
+    <insert id="addSupplier">
+        insert into t_supplier (code, name, contact, phone, address, create_time)
+        values (#{code},#{name},#{contact},#{phone},#{address},#{create_time});
+    </insert>
+
+<!--    void updateSupplier(Supplier supplier);-->
+    <update id="updateSupplier">
+        update t_supplier
+        set code=#{code}, name=#{name},contact=#{contact},phone=#{phone},address=#{address}
+        where id=#{id};
+    </update>
+
+<!--    void deleteSupplier(Long supplier);-->
+    <delete id="deleteSupplier">
+        delete
+        from t_supplier
+        where id=#{id};
+    </delete>
+
+</mapper>
