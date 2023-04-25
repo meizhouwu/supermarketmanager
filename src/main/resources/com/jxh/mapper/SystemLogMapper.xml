@@ -25,4 +25,17 @@
         from t_system_log
         where id=#{id};
     </delete>
+
+<!--    void addSystemLog(SystemLog log);-->
+    <insert id="addSystemLog">
+        insert into t_system_log (operation_id, content, create_time)
+        values (#{operation_id},#{content},#{create_time});
+    </insert>
+
+<!--    void updateSystemLog(SystemLog systemLog);-->
+    <update id="updateSystemLog">
+        update t_system_log
+        set operation_id = #{operation_id},content=#{content},create_time=#{create_time}
+        where id=#{id};
+    </update>
 </mapper>

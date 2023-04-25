@@ -1,15 +1,21 @@
 package com.jxh.log;
 
+import com.jxh.constant.SystemConstant;
+import com.jxh.domain.Admin;
+import com.jxh.domain.SystemLog;
+import com.jxh.service.ISystemLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
@@ -19,6 +25,9 @@ import java.util.Objects;
 @Aspect
 @Component //将当前类交给Spring管理 = 创建对象
 public class LogService {
+
+    @Autowired
+    private ISystemLogService systemLogService;
 
 
 
@@ -52,6 +61,24 @@ public class LogService {
         String ip = request.getRemoteAddr();
         //获取时间
         String date = new SimpleDateFormat("yyyy年MM月dd日-HH:mm:ss").format(new Date());
+
+        SystemLog systemLog = new SystemLog();
+        HttpSession session = attributes.getRequest().getSession();
+        Object o = session.getAttribute(SystemConstant.ADMIN_IN_SESSION);
+        Admin admin= (Admin) o;
+        try {
+            if (admin!=null){
+
+                systemLog.setOperation_id(admin.getId());
+                System.out.println(admin);
+                systemLog.setContent(ip+"在"+date+"操作了"+className+"的"+methodName+"方法");
+                systemLogService.addSystemLog(systemLog);
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
 
         log.debug("操作类>>>>>"+className);
         log.debug("操作方法>>>>>"+methodName);

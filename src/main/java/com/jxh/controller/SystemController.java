@@ -45,6 +45,7 @@ public class SystemController {
     public String login(Admin admin, Model model, HttpSession session) {
         try {
             Admin dbAdmin = adminService.login(admin);
+            System.out.println(dbAdmin);
             session.setAttribute(SystemConstant.ADMIN_IN_SESSION, dbAdmin);
             return "index";
         } catch (Exception e) {

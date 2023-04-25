@@ -10,4 +10,8 @@ public interface ISystemLogService {
     SystemLog getSystemLog(Long id);
 
     void deleteSystemLog(Long id);
+
+    void addSystemLog(SystemLog systemLog);
+
+    void updateSystemLog(SystemLog systemLog);
 }

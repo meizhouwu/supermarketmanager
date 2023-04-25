@@ -31,8 +31,8 @@ public class AdminServiceImpl implements IAdminService {
             if (!dbadmin.getPassword().equals(admin.getPassword())) {
                 throw new BusinessException("密码错误");
             } else {
-                //都对了，返回对象给前端
-                return admin;
+                //都对了，返回查到的对象给前端
+                return dbadmin;
             }
         }
     }

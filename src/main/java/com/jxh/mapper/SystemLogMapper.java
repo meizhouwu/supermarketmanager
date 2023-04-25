@@ -12,4 +12,8 @@ public interface SystemLogMapper {
     SystemLog getSystemLog(Long id);
 
     void deleteSystemLog(Long id);
+
+    void addSystemLog(SystemLog log);
+
+    void updateSystemLog(SystemLog systemLog);
 }

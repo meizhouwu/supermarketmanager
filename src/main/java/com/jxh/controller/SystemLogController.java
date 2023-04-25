@@ -36,4 +36,6 @@ public class SystemLogController {
         return "redirect:/systemLog/list";
     }
 
+
+
 }

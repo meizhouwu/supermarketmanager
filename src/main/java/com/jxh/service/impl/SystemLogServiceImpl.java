@@ -28,4 +28,14 @@ public class SystemLogServiceImpl implements ISystemLogService {
     public void deleteSystemLog(Long id) {
         systemLogMapper.deleteSystemLog(id);
     }
+
+    @Override
+    public void addSystemLog(SystemLog systemLog) {
+        systemLogMapper.addSystemLog(systemLog);
+    }
+
+    @Override
+    public void updateSystemLog(SystemLog systemLog) {
+        systemLogMapper.updateSystemLog(systemLog);
+    }
 }
