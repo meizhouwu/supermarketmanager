@@ -44,7 +44,8 @@
         </div>
         <div class="providerView">
             <p><strong>日志编号：</strong><span th:text="${one.id}">1</span></p>
-            <p><strong>操作人姓名：</strong><span th:text="${one.operation_id}">韩露</span></p>
+            <p><strong>操作人id：</strong><span th:text="${one.operation_id}">韩露</span></p>
+            <p><strong>操作人：</strong><span th:text="${one.operation}">韩露</span></p>
             <p><strong>操作内容：</strong><span th:text="${one.content}">女</span></p>
             <p><strong>创建时间：</strong><span th:text="${#dates.format(one.create_time, 'yyyy/MM/dd HH:mm')}">15918230478</span></p>
            

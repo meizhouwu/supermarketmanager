@@ -7,4 +7,9 @@ package com.jxh.constant;
 public class SystemConstant {
     public static final String ADMIN_IN_SESSION = "ADMIN_IN_SESSION";
 
+    /**
+     * 记录指定方法
+     */
+    public static final String[] METHOD = {"add","delete","update"};
+
 }

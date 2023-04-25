@@ -8,15 +8,19 @@
 
 <!--    List<SystemLog> getSystemLogList();-->
     <select id="getSystemLogList" resultType="systemLog">
-        select *
-        from t_system_log;
+        select t_system_log.*,t_admin.username as operation
+        from t_system_log
+        left join t_admin
+        on t_system_log.operation_id=t_admin.id;
     </select>
 
 <!--    SystemLog getSystemLog(Long id);-->
     <select id="getSystemLog" resultType="systemLog">
-        select *
+        select t_system_log.*,t_admin.username as operation
         from t_system_log
-        where id=#{id};
+        left join t_admin
+        on t_system_log.operation_id=t_admin.id
+        where t_system_log.id=#{id};
     </select>
 
 <!--    void deleteSystemLog(Long id);-->
