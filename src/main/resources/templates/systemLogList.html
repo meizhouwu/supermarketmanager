@@ -29,9 +29,9 @@
                 <ul class="list">
                     <li><a href="billList.html">账单管理</a></li>
                     <li><a href="/supplier/list">供应商管理</a></li>
-                    <li id="active"><a href="/customer/list">顾客管理</a></li>
+                    <li><a href="/customer/list">顾客管理</a></li>
                     <li><a href="password.html">密码修改</a></li>
-                    <li><a href="/systemLog/list">日志管理</a></li>
+                    <li id="active"><a href="/systemLog/list">日志管理</a></li>
                     <li><a href="/logout">退出系统</a></li>
                 </ul>
             </nav>
@@ -39,34 +39,32 @@
         <div class="right">
             <div class="location">
                 <strong>你现在所在的位置是:</strong>
-                <span>顾客管理页面</span>
+                <span>日志管理页面</span>
             </div>
-            <div class="search">
-                <span>顾客名：</span>
-                <input type="text" placeholder="请输入顾客名"/>
-                <input type="button" value="查询"/>
-                <a href="/customer/toAdd">添加顾客</a>
-            </div>
-            <!--顾客-->
+<!--            <div class="search">-->
+<!--                <span>日志名：</span>-->
+<!--                <input type="text" placeholder="请输入日志名"/>-->
+<!--                <input type="button" value="查询"/>-->
+<!--                <a href="/customer/toAdd">添加日志</a>-->
+<!--            </div>-->
+            <!--日志-->
             <table class="providerTable" cellpadding="0" cellspacing="0">
                 <tr class="firstTr">
-                    <th width="10%">姓名</th>
-                    <th width="10%">电话</th>
-                    <th width="20%">地址</th>
+                    <th width="10%">id</th>
+                    <th width="10%">操作人</th>
+                    <th width="35%">操作内容</th>
                     <th width="15%">创建时间</th>
-                    <th width="15%">修改时间</th>
                     <th width="30%">操作</th>
                 </tr>
-                <tr th:each="c:${list}">
-                    <td th:text="${c.name}">1</td>
-                    <td th:text="${c.phone}">女</td>
-                    <td th:text="${c.address}">20</td>
-                    <td th:text="${#dates.format(c.create_time, 'yyyy/MM/dd HH:mm')}">123456</td>
-                    <td th:text="${#dates.format(c.update_time, 'yyyy/MM/dd HH:mm')}">15918230478</td>
+                <tr th:each="log:${list}">
+                    <td th:text="${log.id}">1</td>
+                    <td th:text="${log.operation_id}">女</td>
+                    <td th:text="${log.content}">20</td>
+                    <td th:text="${#dates.format(log.create_time, 'yyyy/MM/dd HH:mm')}">123456</td>
                     <td>
-                        <a th:href="@{/customer/view(id=${c.id})}"><img src="img/read.png" alt="查看" title="查看"/></a>
-                        <a th:href="@{/customer/toUpdate(id=${c.id})}"><img src="img/xiugai.png" alt="修改" title="修改"/></a>
-                        <a href="javascript:;" th:id="${c.id}" th:name="${c.name}"
+                        <a th:href="@{/systemLog/view(id=${log.id})}"><img src="img/read.png" alt="查看" title="查看"/></a>
+<!--                        <a th:href="@{/customer/toUpdate(id=${c.id})}"><img src="img/xiugai.png" alt="修改" title="修改"/></a>-->
+                        <a href="javascript:;" th:id="${log.id}"
                            onclick="del(this)"><img src="img/schu.png" alt="删除" title="删除"/></a>
                     </td>
                 </tr>
@@ -81,7 +79,7 @@
     <div class="removerChid">
         <h2>提示</h2>
         <div class="removeMain">
-            <p>你确定要删除该顾客吗？</p>
+            <p>你确定要删除该日志吗？</p>
             <a href="#" id="yes">确定</a>
             <a href="#" id="no">取消</a>
         </div>
@@ -96,9 +94,9 @@
 <script src="js/time.js"></script>
 <script type="text/javascript">
     function del(t){
-        var boo = confirm("你确定要删除【"+t.name+"】吗？");
+        var boo = confirm("你确定要删除吗？");
         if(boo){
-            location.href = "/customer/delete?id="+t.id;
+            location.href = "/systemLog/delete?id="+t.id;
         }
     }
 </script>
