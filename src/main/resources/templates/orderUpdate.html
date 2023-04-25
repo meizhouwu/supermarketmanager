@@ -28,8 +28,8 @@
         <h2 class="leftH2"><span class="span1"></span>功能列表 <span></span></h2>
         <nav>
             <ul class="list">
-                <li><a href="/order/list">订单管理</a></li>
-                <li id="active"><a href="/supplier/list">供应商管理</a></li>
+                <li id="active"><a href="/order/list">订单管理</a></li>
+                <li><a href="/supplier/list">供应商管理</a></li>
                 <li><a href="/customer/list">顾客管理</a></li>
                 <li><a href="/pwd">密码修改</a></li>
                 <li><a href="/systemLog/list">日志管理</a></li>
@@ -40,40 +40,45 @@
     <div class="right">
         <div class="location">
             <strong>你现在所在的位置是:</strong>
-            <span>供应商管理页面 >> 供应商添加页面</span>
+            <span>管理页面 >> 订单修改页面</span>
         </div>
         <div class="providerAdd">
-            <form action="/supplier/add" method="post">
+            <form action="/order/update" method="post">
                 <!--div的class 为error是验证错误，ok是验证成功-->
+                <input type="hidden" name="id" th:value="${one.id}"/>
                 <div class="">
-                    <label for="code">供应商编码：</label>
-                    <input type="text" name="code" id="code"/>
-                    <span>*请输入供应商编码</span>
+                    <label for="order_sn">订单编码：</label>
+                    <input type="text" name="order_sn" id="order_sn" th:value="${one.order_sn}" required/>
+                    <span>*</span>
                 </div>
                 <div>
-                    <label for="name">供应商名称：</label>
-                    <input type="text" name="name" id="name"/>
-                    <span >*请输入供应商名称</span>
+                    <label for="total_price">实际价格：</label>
+                    <input type="text" name="total_price" id="total_price" th:value="${one.total_price}" required/>
+                    <span >*</span>
                 </div>
                 <div>
-                    <label for="contact">联系人：</label>
-                    <input type="text" name="contact" id="contact"/>
-                    <span>*请输入联系人</span>
-
+                    支付状态：
+                    <label>
+                        <input name="state" type="radio" value="1" th:checked="${one.state}==1"/>已完成
+                    </label>
+                    <label>
+                        <input name="state" type="radio" value="0" th:checked="${one.state}==0"/>待支付
+                    </label>
+                    <label>
+                        <input name="state" type="radio" value="-1" th:checked="${one.state}==-1"/>取消
+                    </label>
                 </div>
                 <div>
-                    <label for="phone">联系电话：</label>
-                    <input type="text" name="phone" id="phone"/>
-                    <span>*请输入联系电话</span>
-                </div>
-                <div>
-                    <label for="address">联系地址：</label>
-                    <input type="text" name="address" id="address"/>
-                    <span></span>
+                    顾客id：
+                    <select name="customer_id" th:value="${one.customer_id}">
+                        <option th:each="c:${list}" th:value="${c.id}" th:text="${c.name}"
+                                th:selected="${one.customer_id==c.id}">
+                        </option>
+                    </select>
                 </div>
                 <div class="providerAddBtn">
                     <!--<a href="#">保存</a>-->
-                    <!--<a href="supplierList.html">返回</a>-->
+                    <!--<a href="orderList.html">返回</a>-->
                     <input type="submit" value="保存" style="line-height: 15px;"/>
                     <input type="button" value="返回" onclick="history.back(-1)"/>
                 </div>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 public class SystemController {
+
+
 
     @Autowired
     private IAdminService adminService;
@@ -45,8 +48,8 @@ public class SystemController {
     public String login(Admin admin, Model model, HttpSession session) {
         try {
             Admin dbAdmin = adminService.login(admin);
-            System.out.println(dbAdmin);
             session.setAttribute(SystemConstant.ADMIN_IN_SESSION, dbAdmin);
+            System.out.println(dbAdmin.getNickname());
             return "index";
         } catch (Exception e) {
             model.addAttribute("error",e.getMessage());
@@ -60,6 +63,23 @@ public class SystemController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
+        return "login";
+    }
+
+    /**
+     * 跳转修改密码页
+     */
+    @GetMapping("/pwd")
+    public String gopwd() {
+        return "password";
+    }
+
+    /**
+     * 修改密码
+     */
+    @RequestMapping("/updatePwd")
+    public String updatePwd(Admin admin){
+        adminService.updateAdmin(admin);
         return "login";
     }
 

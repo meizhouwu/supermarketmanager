@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义mapper接口路径 -->
+<mapper namespace="com.jxh.mapper.OrderMapper">
+    <!--id的值保证Mapper接口的方法名一值-->
+
+
+<!--    List<Order> getOrderList();-->
+    <select id="getOrderList" resultType="order">
+        select t_order.*,t_customer.name as customer
+        from t_order
+        left join t_customer on t_order.customer_id = t_customer.id;
+    </select>
+
+<!--    Order getOrderById(Long id);-->
+    <select id="getOrderById" resultType="order">
+        select t_order.*,t_customer.name as customer
+        from t_order
+        left join t_customer on t_order.customer_id = t_customer.id
+        where t_order.id=#{id};
+    </select>
+
+
+<!--    void addOrder(Order order);-->
+    <insert id="addOrder">
+        insert into t_order (order_sn, create_time, total_price, state, customer_id)
+        values (#{order_sn},#{create_time},#{total_price},#{state},#{customer_id});
+    </insert>
+
+<!--    void updateOrder(Order order);-->
+    <update id="updateOrder">
+        update t_order
+        set order_sn=#{order_sn},create_time=#{create_time},total_price=#{total_price},state=#{state},customer_id=#{customer_id}
+        where id=#{id};
+    </update>
+
+<!--    void deleteOrder(Long id);-->
+    <delete id="deleteOrder">
+        delete
+        from t_order
+        where id=#{id};
+    </delete>
+</mapper>

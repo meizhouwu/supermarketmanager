@@ -1,18 +1,19 @@
 ﻿<!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
+    <base href="/">
     <meta charset="UTF-8">
-    <title>超市账单管理系统</title>
+    <title>超市管理系统</title>
     <link rel="stylesheet" href="css/public.css"/>
     <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
 <!--头部-->
     <header class="publicHeader">
-        <h1>超市账单管理系统</h1>
+        <h1>超市管理系统</h1>
         <div class="publicHeaderR">
-            <p><span>下午好！</span><span style="color: #fff21b"> Admin</span> , 欢迎你！</p>
-            <a href="login.html">退出</a>
+            <p><span id="hours">下午好！</span><span style="color: #fff21b" th:text="${session.ADMIN_IN_SESSION.getNickname()}"> Admin</span> , 欢迎你！</p>
+            <a href="/logout">退出</a>
         </div>
     </header>
 <!--时间-->
@@ -26,18 +27,19 @@
             <h2 class="leftH2"><span class="span1"></span>功能列表 <span></span></h2>
             <nav>
                 <ul class="list">
-                    <li id="active"><a href="billList.html">账单管理</a></li>
-                    <li><a href="supplierList.html">供应商管理</a></li>
-                    <li><a href="customerList.html">用户管理</a></li>
-                    <li><a href="password.html">密码修改</a></li>
-                    <li><a href="login.html">退出系统</a></li>
+                    <li id="active"><a href="/order/list">订单管理</a></li>
+                    <li><a href="/supplier/list">供应商管理</a></li>
+                    <li><a href="/customer/list">顾客管理</a></li>
+                    <li><a href="/pwd">密码修改</a></li>
+                    <li><a href="/systemLog/list">日志管理</a></li>
+                    <li><a href="/logout">退出系统</a></li>
                 </ul>
             </nav>
         </div>
         <div class="right">
             <div class="location">
                 <strong>你现在所在的位置是:</strong>
-                <span>账单管理页面</span>
+                <span>订单管理页面</span>
             </div>
             <div class="search">
                 <span>商品名称：</span>
@@ -58,43 +60,29 @@
                 </select>
 
                 <input type="button" value="查询"/>
-                <a href="billAdd.html">添加订单</a>
+                <a href="/order/toAdd">添加订单</a>
             </div>
-            <!--账单表格 样式和供应商公用-->
+            <!--表格 样式和供应商公用-->
             <table class="providerTable" cellpadding="0" cellspacing="0">
                 <tr class="firstTr">
-                    <th width="10%">账单编码</th>
-                    <th width="20%">商品名称</th>
-                    <th width="10%">供应商</th>
-                    <th width="10%">账单金额</th>
-                    <th width="10%">是否付款</th>
-                    <th width="10%">创建时间</th>
+                    <th width="20%">订单编码</th>
+                    <th width="20%">创建时间</th>
+                    <th width="10%">实际价格</th>
+                    <th width="10%">支付状态</th>
+                    <th width="10%">顾客</th>
                     <th width="30%">操作</th>
                 </tr>
-                <tr>
-                    <td>213</td>
-                    <td>123</td>
-                    <td>北京市粮油总公司</td>
-                    <td>22.00</td>
-                    <td>未付款</td>
-                    <td>2015-11-12</td>
+                <tr th:each="o:${list}">
+                    <td th:text="${o.order_sn}">213</td>
+                    <td th:text="${#dates.format(o.create_time, 'yyyy/MM/dd HH:mm')}">123</td>
+                    <td th:text="${o.total_price}">北京市粮油总公司</td>
+                    <td th:text="${o.state}">22.00</td>
+                    <td th:text="${o.customer}">未付款</td>
                     <td>
-                        <a href="billView.html"><img src="img/read.png" alt="查看" title="查看"/></a>
-                        <a href="billUpdate.html"><img src="img/xiugai.png" alt="修改" title="修改"/></a>
-                        <a href="#" class="removeBill"><img src="img/schu.png" alt="删除" title="删除"/></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>PRO-CODE—001</td>
-                    <td>测试供应商001</td>
-                    <td>邯郸市五得利面粉厂</td>
-                    <td>15918230478</td>
-                    <td>15918230478</td>
-                    <td>2015-11-12</td>
-                    <td>
-                        <a href="supplierView.html"><img src="img/read.png" alt="查看" title="查看"/></a>
-                        <a href="supplierUpdate.html"><img src="img/xiugai.png" alt="修改" title="修改"/></a>
-                        <a href="#" class="removeBill"><img src="img/schu.png" alt="删除" title="删除"/></a>
+                        <a th:href="@{/order/view(id=${o.id})}"><img src="img/read.png" alt="查看" title="查看"/></a>
+                        <a th:href="@{/order/toUpdate(id=${o.id})}"><img src="img/xiugai.png" alt="修改" title="修改"/></a>
+                        <a href="javascript:;" th:id="${o.id}"
+                           onclick="del(this)"><img src="img/schu.png" alt="删除" title="删除"/></a>
                     </td>
                 </tr>
             </table>
@@ -120,6 +108,13 @@
 <script src="js/jquery.js"></script>
 <script src="js/js.js"></script>
 <script src="js/time.js"></script>
-
+<script type="text/javascript">
+    function del(t){
+        var boo = confirm("你确定要删除吗？");
+        if(boo){
+            location.href = "/order/delete?id="+t.id;
+        }
+    }
+</script>
 </body>
 </html>

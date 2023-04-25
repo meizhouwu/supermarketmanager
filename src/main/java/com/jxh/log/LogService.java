@@ -17,13 +17,18 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * @author meizh
+ * 一个切面类
+ */
 @Slf4j //打印日志
-/*第一步：声明这是一个切面类*/
+
 @Aspect
-@Component //将当前类交给Spring管理 = 创建对象
+@Component
 public class LogService {
 
     @Autowired
@@ -51,41 +56,39 @@ public class LogService {
     @Around(value = "controllerPointcut()")
     public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
-        //获取类名
-        String className = proceedingJoinPoint.getTarget().getClass().getName();
         //获取方法名
         String methodName = proceedingJoinPoint.getSignature().getName();
+        //获取类名
+        String className = proceedingJoinPoint.getTarget().getClass().getName();
         //获取ip
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        //Objects.requireNonNull(attributes)，判断不为空，防止异常
         HttpServletRequest request = Objects.requireNonNull(attributes).getRequest();
         String ip = request.getRemoteAddr();
         //获取时间
         String date = new SimpleDateFormat("yyyy年MM月dd日-HH:mm:ss").format(new Date());
-
-        SystemLog systemLog = new SystemLog();
+        //获取session
         HttpSession session = attributes.getRequest().getSession();
         Object o = session.getAttribute(SystemConstant.ADMIN_IN_SESSION);
         Admin admin= (Admin) o;
-        try {
-            if (admin!=null){
-
-                systemLog.setOperation_id(admin.getId());
-                System.out.println(admin);
-                systemLog.setContent(ip+"在"+date+"操作了"+className+"的"+methodName+"方法");
-                systemLogService.addSystemLog(systemLog);
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        //Arrays.stream(SystemConstant.METHOD).anyMatch(methodName::startsWith)
+        //java8 stream接口终端操作 anyMatch，allMatch，noneMatch
+        //anyMatch：判断的条件里，任意一个元素成功，返回true
+        //allMatch：判断条件里的元素，所有的都是，返回true
+        //noneMatch：与allMatch相反，判断条件里的元素，所有的都不是，返回true
+        if (admin!=null && Arrays.stream(SystemConstant.METHOD).anyMatch(methodName::startsWith)){
+            SystemLog systemLog = new SystemLog();
+            systemLog.setOperation_id(admin.getId());
+            systemLog.setContent(ip+"在"+date+"操作了"+className+"的"+methodName+"方法");
+            systemLogService.addSystemLog(systemLog);
         }
-
-
         log.debug("操作类>>>>>"+className);
         log.debug("操作方法>>>>>"+methodName);
         log.debug("ip>>>>>"+ip);
         log.debug(ip+"在"+date+"操作了"+className+"的"+methodName+"方法");
         //执行业务方法
-        Object result = proceedingJoinPoint.proceed();
-        return result;
+//        Object result = proceedingJoinPoint.proceed();
+//        return result;
+        return proceedingJoinPoint.proceed();
     }
 }

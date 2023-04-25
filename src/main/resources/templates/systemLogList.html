@@ -12,7 +12,7 @@
     <header class="publicHeader">
         <h1>超市管理系统</h1>
         <div class="publicHeaderR">
-            <p><span id="hours">下午好！</span><span style="color: #fff21b"> Admin</span> , 欢迎你！</p>
+            <p><span id="hours">下午好！</span><span style="color: #fff21b" th:text="${session.ADMIN_IN_SESSION.getNickname()}"> Admin</span> , 欢迎你！</p>
             <a href="/logout">退出</a>
         </div>
     </header>
@@ -27,10 +27,10 @@
             <h2 class="leftH2"><span class="span1"></span>功能列表 <span></span></h2>
             <nav>
                 <ul class="list">
-                    <li><a href="billList.html">账单管理</a></li>
+                    <li><a href="/order/list">订单管理</a></li>
                     <li><a href="/supplier/list">供应商管理</a></li>
                     <li><a href="/customer/list">顾客管理</a></li>
-                    <li><a href="password.html">密码修改</a></li>
+                    <li><a href="/pwd">密码修改</a></li>
                     <li id="active"><a href="/systemLog/list">日志管理</a></li>
                     <li><a href="/logout">退出系统</a></li>
                 </ul>
@@ -50,15 +50,15 @@
             <!--日志-->
             <table class="providerTable" cellpadding="0" cellspacing="0">
                 <tr class="firstTr">
-                    <th width="5%">id</th>
+                    <th width="5%">操作人id</th>
                     <th width="5%">操作人</th>
                     <th width="60%">操作内容</th>
                     <th width="15%">创建时间</th>
                     <th width="15%">操作</th>
                 </tr>
                 <tr th:each="log:${list}">
-                    <td th:text="${log.id}">1</td>
-                    <td th:text="${log.operation_id}">女</td>
+                    <td th:text="${log.operation_id}">1</td>
+                    <td th:text="${log.operation}">女</td>
                     <td th:text="${log.content}">20</td>
                     <td th:text="${#dates.format(log.create_time, 'yyyy/MM/dd HH:mm')}">123456</td>
                     <td>

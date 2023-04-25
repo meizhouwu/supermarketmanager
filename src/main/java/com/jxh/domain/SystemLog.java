@@ -10,4 +10,6 @@ public class SystemLog {
     private Long operation_id;
     private String content;
     private Date create_time = new Date();
+
+    private String operation;
 }

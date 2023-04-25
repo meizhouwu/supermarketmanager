@@ -9,4 +9,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface AdminMapper {
     Admin findAdminByUsername(String username);
+
+    void updateAdmin(Admin admin);
 }

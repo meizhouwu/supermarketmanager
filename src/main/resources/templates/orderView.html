@@ -28,9 +28,9 @@
         <h2 class="leftH2"><span class="span1"></span>功能列表 <span></span></h2>
         <nav>
             <ul class="list">
-                <li><a href="/order/list">订单管理</a></li>
-                <li ><a href="/supplier/list">供应商管理</a></li>
-                <li id="active"><a href="/customer/list">顾客管理</a></li>
+                <li id="active"><a href="/order/list">订单管理</a></li>
+                <li><a href="/supplier/list">供应商管理</a></li>
+                <li><a href="/customer/list">顾客管理</a></li>
                 <li><a href="/pwd">密码修改</a></li>
                 <li><a href="/systemLog/list">日志管理</a></li>
                 <li><a href="/logout">退出系统</a></li>
@@ -40,33 +40,22 @@
     <div class="right">
         <div class="location">
             <strong>你现在所在的位置是:</strong>
-            <span>顾客管理页面 >> 顾客添加页面</span>
+            <span>管理页面 >> 信息查看</span>
         </div>
-        <div class="providerAdd">
-            <form action="/customer/add" method="post">
-                <!--div的class 为error是验证错误，ok是验证成功-->
-                <div class="">
-                    <label for="name">顾客姓名：</label>
-                    <input type="text" name="name" id="name" required/>
-                </div>
-                <div>
-                    <label for="phone">顾客电话：</label>
-                    <input type="password" name="phone" id="phone" required/>
-                </div>
-                <div>
-                    <label for="address">顾客地址：</label>
-                    <input type="text" name="address" id="address" required/>
-                </div>
+        <div class="providerView">
+            <p><strong>订单编号：</strong><span th:text="${one.order_sn}">231</span></p>
+            <p><strong>创建时间：</strong><span th:text="${#dates.format(one.create_time, 'yyyy/MM/dd HH:mm')}">123</span></p>
+            <p><strong>实际价格：</strong><span th:text="${one.total_price}">北极</span></p>
+<!--            <p><strong>支付状态：</strong><span th:text="${one.state}">22</span></p>-->
+            <p>
+                <strong>支付状态：</strong>
+                <span th:text="${one.state}=='1'?'已完成':(${one.state}=='0'?'待支付':'已取消')">22</span>
+            </p>
+            <p><strong>顾客：</strong><span th:text="${one.customer}">22</span></p>
 
-                <div class="providerAddBtn">
-                    <!--<a href="#">保存</a>-->
-                    <!--<a href="customerList.html">返回</a>-->
-                    <input type="submit" value="保存" style="line-height: 15px;"/>
-                    <input type="button" value="返回" onclick="history.back(-1)"/>
-                </div>
-            </form>
+
+            <a href="/order/list">返回</a>
         </div>
-
     </div>
 </section>
 <footer class="footer">

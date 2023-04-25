@@ -12,4 +12,11 @@
         from t_admin
         where username=#{username};
     </select>
+
+<!--    void updateAdmin(Admin admin);-->
+    <update id="updateAdmin">
+        update t_admin
+        set password=#{password}
+        where id=#{id}
+    </update>
 </mapper>

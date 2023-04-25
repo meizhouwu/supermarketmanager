@@ -18,7 +18,7 @@ $(function () {
 });
 
 
-//订单管理页面上点击删除按钮弹出删除框(billList.html)
+//订单管理页面上点击删除按钮弹出删除框(orderList.html)
 $(function () {
     $('.removeBill').click(function () {
         $('.zhezhao').css('display', 'block');
