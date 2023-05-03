@@ -29,11 +29,11 @@
                 <ul class="list">
                     <li><a href="/order/list">订单管理</a></li>
                     <li><a href="/supplier/list">供应商管理</a></li>
-                    <li id="active"><a href="/customer/list">顾客管理</a></li>
+                    <li><a href="/customer/list">顾客管理</a></li>
                     <li><a href="/pwd">密码修改</a></li>
                     <li><a href="/systemLog/list">日志管理</a></li>
                     <li><a href="/category/list">商品分类管理</a> </li>
-                    <li><a href="/product/list">商品管理</a></li>
+                    <li id="active"><a href="/product/list">商品管理</a></li>
                     <li><a href="/logout">退出系统</a></li>
                 </ul>
             </nav>
@@ -41,51 +41,70 @@
         <div class="right">
             <div class="location">
                 <strong>你现在所在的位置是:</strong>
-                <span>顾客管理页面</span>
+                <span>商品管理页面</span>
             </div>
             <div class="search">
-                <form action="/customer/list" method="post">
-                    <span>顾客名：</span>
-                    <input type="text" name="name" placeholder="请输入顾客名"/>
+                <form action="/product/list" method="post">
+                    <span>商品编码：</span>
+                    <input type="text" name="code" placeholder="请输入商品的编码"/>
+
+                    <span>商品分类：</span>
+                    <select name="category_id">
+                        <option value="">请选择</option>
+                        <option th:each="c:${cList}"
+                                th:value="${c.id}" th:text="${c.name}">
+                        </option>
+                    </select>
+
+                    <span>供应商：</span>
+                    <select name="supplier_id">
+                        <option value="">请选择</option>
+                        <option th:each="s:${sList}"
+                                th:value="${s.id}" th:text="${s.name}">
+                        </option>
+                    </select>
+                    <a href="/product/toAdd">添加商品</a>
                     <input type="submit" value="查询"/>
-                    <a href="/customer/toAdd">添加顾客</a>
                 </form>
             </div>
-            <!--顾客-->
+            <!--表格 样式和供应商公用-->
             <table class="providerTable" cellpadding="0" cellspacing="0">
                 <tr class="firstTr">
-                    <th width="10%">姓名</th>
-                    <th width="10%">电话</th>
-                    <th width="20%">地址</th>
-                    <th width="15%">创建时间</th>
-                    <th width="15%">修改时间</th>
-                    <th width="30%">操作</th>
+                    <th width="10%">商品编码</th>
+                    <th width="20%">商品名称</th>
+                    <th width="10%">商品价格</th>
+                    <th width="10%">商品库存</th>
+                    <th width="10%">商品分类</th>
+                    <th width="20%">商品供应商</th>
+                    <th width="10%">商品描述</th>
+                    <th width="10%">操作</th>
                 </tr>
-                <tr th:each="c:${list}">
-                    <td th:text="${c.name}">1</td>
-                    <td th:text="${c.phone}">女</td>
-                    <td th:text="${c.address}">20</td>
-                    <td th:text="${#dates.format(c.create_time, 'yyyy/MM/dd HH:mm')}">123456</td>
-                    <td th:text="${#dates.format(c.update_time, 'yyyy/MM/dd HH:mm')}">15918230478</td>
+                <tr th:each="p:${list}">
+                    <td th:text="${p.code}">213</td>
+                    <td th:text="${p.name}">213</td>
+                    <td th:text="${p.price}">213</td>
+                    <td th:text="${p.stock}">213</td>
+                    <td th:text="${p.category}">213</td>
+                    <td th:text="${p.supplier}">213</td>
+                    <td th:text="${p.desc}">213</td>
                     <td>
-                        <a th:href="@{/customer/view(id=${c.id})}"><img src="img/read.png" alt="查看" title="查看"/></a>
-                        <a th:href="@{/customer/toUpdate(id=${c.id})}"><img src="img/xiugai.png" alt="修改" title="修改"/></a>
-                        <a href="javascript:;" th:id="${c.id}" th:name="${c.name}"
+                        <a th:href="@{/product/view(id=${p.id})}"><img src="img/read.png" alt="查看" title="查看"/></a>
+                        <a th:href="@{/product/toUpdate(id=${p.id})}"><img src="img/xiugai.png" alt="修改" title="修改"/></a>
+                        <a href="javascript:;" th:id="${p.id}"
                            onclick="del(this)"><img src="img/schu.png" alt="删除" title="删除"/></a>
                     </td>
                 </tr>
             </table>
-
         </div>
     </section>
 
 <!--点击删除按钮后弹出的页面-->
 <div class="zhezhao"></div>
-<div class="remove" id="removeUse">
+<div class="remove" id="removeBi">
     <div class="removerChid">
         <h2>提示</h2>
         <div class="removeMain">
-            <p>你确定要删除该顾客吗？</p>
+            <p>你确定要删除该订单吗？</p>
             <a href="#" id="yes">确定</a>
             <a href="#" id="no">取消</a>
         </div>
@@ -100,9 +119,9 @@
 <script src="js/time.js"></script>
 <script type="text/javascript">
     function del(t){
-        var boo = confirm("你确定要删除【"+t.name+"】吗？");
+        var boo = confirm("你确定要删除吗？");
         if(boo){
-            location.href = "/customer/delete?id="+t.id;
+            location.href = "/product/delete?id="+t.id;
         }
     }
 </script>

@@ -15,8 +15,8 @@ public class OrderServiceImpl implements IOrderService {
     private OrderMapper orderMapper;
 
     @Override
-    public List<Order> getOrderList() {
-        return orderMapper.getOrderList();
+    public List<Order> getOrderList(String order_sn,Long customer_id,Integer state) {
+        return orderMapper.getOrderList(order_sn,customer_id,state);
     }
 
     @Override

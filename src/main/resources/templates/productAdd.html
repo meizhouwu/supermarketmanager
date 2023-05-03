@@ -28,13 +28,13 @@
         <h2 class="leftH2"><span class="span1"></span>功能列表 <span></span></h2>
         <nav>
             <ul class="list">
-                <li id="active"><a href="/order/list">订单管理</a></li>
+                <li><a href="/order/list">订单管理</a></li>
                 <li><a href="/supplier/list">供应商管理</a></li>
                 <li><a href="/customer/list">顾客管理</a></li>
                 <li><a href="/pwd">密码修改</a></li>
                 <li><a href="/systemLog/list">日志管理</a></li>
                 <li><a href="/category/list">商品分类管理</a> </li>
-                <li><a href="/product/list">商品管理</a></li>
+                <li id="active"><a href="/product/list">商品管理</a></li>
                 <li><a href="/logout">退出系统</a></li>
             </ul>
         </nav>
@@ -45,44 +45,52 @@
             <span>管理页面 >> 订单添加页面</span>
         </div>
         <div class="providerAdd">
-            <form action="/order/add" method="post">
+            <form action="/product/add" method="post">
                 <!--div的class 为error是验证错误，ok是验证成功-->
                 <div class="">
-                    <label for="order_sn">订单编码：</label>
-                    <input type="text" name="order_sn" id="order_sn" required/>
-                    <span>*请输入订单编码</span>
+                    <label for="code">商品编码：</label>
+                    <input type="text" name="code" id="code" required/>
+                    <span>*</span>
                 </div>
                 <div>
-                    <label for="total_price">实际价格：</label>
-                    <input type="text" name="total_price" id="total_price" required/>
-                    <span >*请输入实际价格</span>
+                    <label for="name">商品名称：</label>
+                    <input type="text" name="name" id="name" required/>
+                    <span >*</span>
                 </div>
-<!--                <div>-->
-<!--                    <label for="state">支付状态：</label>-->
-<!--                    <input type="text" name="state" id="state" required/>-->
-<!--                    <span >*请输入实际价格</span>-->
-<!--                </div>-->
                 <div>
-                    <label>支付状态：</label>
-
-                        <input name="state" type="radio" value="1" checked="checked"/>已完成
-
-                        <input name="state" type="radio" value="0"/>待支付
-
-                        <input name="state" type="radio" value="-1"/>取消
-
+                    <label for="price">商品价格：</label>
+                    <input type="text" name="price" id="price" required/>
+                    <span >*</span>
                 </div>
-
                 <div>
-                    <label>顾客id：</label>
-                    <select name="customer_id">
+                    <label for="stock">商品库存：</label>
+                    <input type="text" name="stock" id="stock" required/>
+                    <span >*</span>
+                </div>
+                <div>
+                    <label>商品分类：</label>
+                    <select name="category_id">
                         <option value="">请选择</option>
-                        <option th:each="c:${list}"
+                        <option th:each="c:${cList}"
                                 th:value="${c.id}" th:text="${c.name}">
                         </option>
                     </select>
-
-                    <span>*请输入顾客id</span>
+                    <span>*</span>
+                </div>
+                <div>
+                    <label>商品供应商：</label>
+                    <select name="supplier_id">
+                        <option value="">请选择</option>
+                        <option th:each="s:${sList}"
+                                th:value="${s.id}" th:text="${s.name}">
+                        </option>
+                    </select>
+                    <span>*</span>
+                </div>
+                <div>
+                    <label for="desc">商品描述：</label>
+                    <input type="text" name="desc" id="desc" required/>
+                    <span >*</span>
                 </div>
 <!--                <div>-->
 <!--                    <label >供应商：</label>-->

@@ -28,9 +28,11 @@ public class OrderController {
      * 查看所有订单信息
      */
     @RequestMapping("/list")
-    public String listOrder(Model model) {
-        List<Order> orderList = orderService.getOrderList();
+    public String listOrder(Model model,String name,String order_sn,Long customer_id,Integer state) {
+        List<Order> orderList = orderService.getOrderList(order_sn,customer_id,state);
         model.addAttribute("list",orderList);
+        List<Customer> customerList = customerService.getCustomerList(name);
+        model.addAttribute("cList",customerList);
         return "orderList";
     }
 
@@ -77,8 +79,8 @@ public class OrderController {
      * 跳转到添加页面
      */
     @RequestMapping("/toAdd")
-    public String toAdd(Model model) {
-        List<Customer> customerList = customerService.getCustomerList();
+    public String toAdd(Model model,String name) {
+        List<Customer> customerList = customerService.getCustomerList(name);
         model.addAttribute("list",customerList);
         return "orderAdd";
     }
@@ -87,10 +89,10 @@ public class OrderController {
      * 跳转到修改页面
      */
     @RequestMapping("/toUpdate")
-    public String toUpdate(Long id,Model model) {
+    public String toUpdate(Long id,Model model,String name) {
         Order orderById = orderService.getOrderById(id);
         model.addAttribute("one",orderById);
-        List<Customer> customerList = customerService.getCustomerList();
+        List<Customer> customerList = customerService.getCustomerList(name);
         model.addAttribute("list",customerList);
         return "orderUpdate";
     }

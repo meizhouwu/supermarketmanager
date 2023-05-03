@@ -24,8 +24,8 @@ public class SupplierController {
      * 查看所有顾客信息
      */
     @RequestMapping("/list")
-    public String listSupplier(Model model) {
-        List<Supplier> supplierList = supplierService.getSupplierList();
+    public String listSupplier(Model model,String name) {
+        List<Supplier> supplierList = supplierService.getSupplierList(name);
         model.addAttribute("list",supplierList);
         return "supplierList";
     }

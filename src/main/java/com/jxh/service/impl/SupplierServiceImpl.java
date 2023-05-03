@@ -18,8 +18,8 @@ public class SupplierServiceImpl implements ISupplierService {
     private SupplierMapper supplierMapper;
 
     @Override
-    public List<Supplier> getSupplierList() {
-        return supplierMapper.getSupplierList();
+    public List<Supplier> getSupplierList(String name) {
+        return supplierMapper.getSupplierList(name);
     }
 
     @Override

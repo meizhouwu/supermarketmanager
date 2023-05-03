@@ -2,6 +2,7 @@ package com.jxh.mapper;
 
 import com.jxh.domain.Customer;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface CustomerMapper {
     /**
      * 查询所有顾客信息
      */
-    List<Customer> getCustomerList();
+    List<Customer> getCustomerList(@Param("name") String name);
 
     /**
      * 查询顾客信息通过id

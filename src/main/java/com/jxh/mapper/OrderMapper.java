@@ -3,6 +3,7 @@ package com.jxh.mapper;
 
 import com.jxh.domain.Order;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface OrderMapper {
     /**
      * 查询所有订单信息
      */
-    List<Order> getOrderList();
+    List<Order> getOrderList(@Param("order_sn") String order_sn, @Param("customer_id") Long customer_id, @Param("state") Integer state);
 
     /**
      * 查询订单信息通过id

@@ -26,8 +26,8 @@ public class CustomerController {
      * 查看所有顾客信息
      */
     @RequestMapping("/list")
-    public String listCustomer(Model model) {
-        List<Customer> customerList = customerService.getCustomerList();
+    public String listCustomer(Model model,String name) {
+        List<Customer> customerList = customerService.getCustomerList(name);
         model.addAttribute("list",customerList);
         return "customerList";
     }

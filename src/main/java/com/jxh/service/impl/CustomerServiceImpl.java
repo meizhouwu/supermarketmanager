@@ -21,8 +21,8 @@ public class CustomerServiceImpl implements ICustomerService {
     private CustomerMapper customerMapper;
 
     @Override
-    public List<Customer> getCustomerList() {
-        return customerMapper.getCustomerList();
+    public List<Customer> getCustomerList(String name) {
+        return customerMapper.getCustomerList(name);
     }
 
     @Override

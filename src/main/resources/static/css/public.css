@@ -209,7 +209,7 @@ li{
     border: 1px solid #8ab2d5;
     border-radius: 4px;
 }
-.search input[type='button']{
+.search input[type='submit']{
     margin-left: 20px;
     width: 100px;
     padding: 0 20px;
@@ -220,7 +220,7 @@ li{
     font-weight: bold;
     background:#87c212 url("../img/search.png") 10px center no-repeat;
 }
-.search input[type='button']:focus{
+.search input[type='submit']:focus{
     outline: none;
     background-color: #5d8410;
 }

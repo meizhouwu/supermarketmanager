@@ -8,7 +8,7 @@ public interface ISupplierService {
     /**
      * 查询所有供应商信息
      */
-    List<Supplier> getSupplierList();
+    List<Supplier> getSupplierList(String name);
 
     /**
      * 查询顾客信息通过id

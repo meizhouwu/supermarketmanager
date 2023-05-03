@@ -11,7 +11,18 @@
     <select id="getOrderList" resultType="order">
         select t_order.*,t_customer.name as customer
         from t_order
-        left join t_customer on t_order.customer_id = t_customer.id;
+        left join t_customer on t_order.customer_id = t_customer.id
+        <where>
+            <if test="order_sn != null and order_sn != ''">
+                and t_order.order_sn like concat('%',#{order_sn},'%')
+            </if>
+            <if test="customer_id != null">
+                and t_order.customer_id = #{customer_id}
+            </if>
+            <if test="state != null">
+                and t_order.state = #{state}
+            </if>
+        </where>;
     </select>
 
 <!--    Order getOrderById(Long id);-->

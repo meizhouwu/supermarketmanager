@@ -8,7 +8,7 @@ public interface IOrderService {
     /**
      * 查询所有订单信息
      */
-    List<Order> getOrderList();
+    List<Order> getOrderList(String order_sn,Long customer_id,Integer state);
 
     /**
      * 查询订单信息通过id

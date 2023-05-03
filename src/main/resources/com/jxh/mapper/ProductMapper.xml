@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义mapper接口路径 -->
+<mapper namespace="com.jxh.mapper.ProductMapper">
+    <!--id的值保证Mapper接口的方法名一值-->
+<!--    List<Product> getProductList();-->
+    <select id="getProductList" resultType="product">
+        select t_product.*,t_category.name as category,t_supplier.name as supplier
+        from t_product
+        left join t_category on t_product.category_id=t_category.id
+        left join t_supplier on t_product.supplier_id=t_supplier.id
+        <where>
+            <if test="code != null and code != ''">
+                and t_product.code like concat('%',#{code},'%')
+            </if>
+            <if test="category_id != null">
+                and t_product.category_id = #{category_id}
+            </if>
+            <if test="supplier_id != null">
+                and t_product.supplier_id = #{supplier_id}
+            </if>
+        </where>;
+    </select>
+
+<!--    Product findProductById(Long id);-->
+    <select id="findProductById" resultType="product">
+        select t_product.*,t_category.name as category,t_supplier.name as supplier
+        from t_product
+        left join t_category on t_product.category_id=t_category.id
+        left join t_supplier on t_product.supplier_id=t_supplier.id
+        where t_product.id=#{id};
+    </select>
+
+<!--    void addProduct(Product product);-->
+    <insert id="addProduct">
+        insert into t_product (code, name, price, stock, category_id, supplier_id, `desc`)
+        values (#{code}, #{name}, #{price}, #{stock}, #{category_id}, #{supplier_id}, #{desc});
+    </insert>
+
+<!--    void updateProduct(Product product);-->
+    <update id="updateProduct">
+        update t_product
+        set code=#{code},name=#{name},price=#{price},stock=#{stock},category_id=#{category_id},supplier_id=#{supplier_id},`desc`=#{desc}
+        where id=#{id};
+    </update>
+
+<!--    void deleteProduct(Long id);-->
+    <delete id="deleteProduct">
+        delete
+        from t_product
+        where id=#{id};
+    </delete>
+
+<!--    void deleteProductByCategory_id(Long id);-->
+    <delete id="deleteProductByCategory_id">
+        delete
+        from t_product
+        where category_id=#{id};
+    </delete>
+</mapper>

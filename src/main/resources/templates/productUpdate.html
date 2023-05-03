@@ -28,13 +28,13 @@
         <h2 class="leftH2"><span class="span1"></span>功能列表 <span></span></h2>
         <nav>
             <ul class="list">
-                <li id="active"><a href="/order/list">订单管理</a></li>
+                <li><a href="/order/list">订单管理</a></li>
                 <li><a href="/supplier/list">供应商管理</a></li>
                 <li><a href="/customer/list">顾客管理</a></li>
                 <li><a href="/pwd">密码修改</a></li>
                 <li><a href="/systemLog/list">日志管理</a></li>
                 <li><a href="/category/list">商品分类管理</a></li>
-                <li><a href="/product/list">商品管理</a></li>
+                <li id="active"><a href="/product/list">商品管理</a></li>
                 <li><a href="/logout">退出系统</a></li>
             </ul>
         </nav>
@@ -42,41 +42,53 @@
     <div class="right">
         <div class="location">
             <strong>你现在所在的位置是:</strong>
-            <span>管理页面 >> 订单修改页面</span>
+            <span>商品管理页面 >> 商品修改页面</span>
         </div>
         <div class="providerAdd">
-            <form action="/order/update" method="post">
+            <form action="/product/update" method="post">
                 <!--div的class 为error是验证错误，ok是验证成功-->
                 <input type="hidden" name="id" th:value="${one.id}"/>
                 <div class="">
-                    <label for="order_sn">订单编码：</label>
-                    <input type="text" name="order_sn" id="order_sn" th:value="${one.order_sn}" required/>
+                    <label for="code">商品编码：</label>
+                    <input type="text" name="code" id="code" th:value="${one.code}" required/>
                     <span>*</span>
                 </div>
                 <div>
-                    <label for="total_price">实际价格：</label>
-                    <input type="text" name="total_price" id="total_price" th:value="${one.total_price}" required/>
+                    <label for="name">商品名称：</label>
+                    <input type="text" name="name" id="name" th:value="${one.name}" required/>
                     <span >*</span>
                 </div>
                 <div>
-                    <label>支付状态：</label>
-
-                        <input name="state" type="radio" value="1" th:checked="${one.state}==1"/>已完成
-
-
-                        <input name="state" type="radio" value="0" th:checked="${one.state}==0"/>待支付
-
-
-                        <input name="state" type="radio" value="-1" th:checked="${one.state}==-1"/>取消
-
+                    <label for="price">商品价格：</label>
+                    <input type="text" name="price" id="price" th:value="${one.price}" required/>
+                    <span >*</span>
                 </div>
                 <div>
-                    <label>顾客id：</label>
-                    <select name="customer_id" th:value="${one.customer_id}">
-                        <option th:each="c:${list}" th:value="${c.id}" th:text="${c.name}"
-                                th:selected="${one.customer_id==c.id}">
+                    <label for="stock">商品库存：</label>
+                    <input type="text" name="stock" id="stock" th:value="${one.stock}" required/>
+                    <span >*</span>
+                </div>
+                <div>
+                    <label>商品分类：</label>
+                    <select name="category_id" th:value="${one.category_id}">
+                        <option th:each="c:${cList}" th:value="${c.id}" th:text="${c.name}"
+                                th:selected="${one.category_id==c.id}">
                         </option>
                     </select>
+                </div>
+                <div>
+                    <label>商品供应商：</label>
+                    <select name="supplier_id" th:value="${one.supplier_id}">
+                        <option th:each="s:${sList}" th:value="${s.id}" th:text="${s.name}"
+                                th:selected="${one.supplier_id==s.id}">
+                        </option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="desc">商品名称：</label>
+                    <input type="text" name="desc" id="desc" th:value="${one.desc}" required/>
+                    <span >*</span>
                 </div>
                 <div class="providerAddBtn">
                     <!--<a href="#">保存</a>-->

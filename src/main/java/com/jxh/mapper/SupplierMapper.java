@@ -2,6 +2,7 @@ package com.jxh.mapper;
 
 import com.jxh.domain.Supplier;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface SupplierMapper {
     /**
      * 查询所有供应商信息
      */
-    List<Supplier> getSupplierList();
+    List<Supplier> getSupplierList(@Param("name") String name);
 
     /**
      * 查询顾客信息通过id

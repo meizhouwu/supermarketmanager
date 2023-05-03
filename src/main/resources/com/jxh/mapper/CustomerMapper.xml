@@ -7,9 +7,14 @@
     <!--id的值保证Mapper接口的方法名一值-->
 
 <!--    List<Customer> getCustomerList();-->
-    <select id="getCustomerList" resultType="customer">
+    <select id="getCustomerList" resultType="customer" parameterType="java.lang.String">
         select *
-        from t_customer;
+        from t_customer
+        <where>
+            <if test="name != null and name != ''">
+                and name like concat('%',#{name},'%')
+            </if>
+        </where>;
     </select>
 <!--    Customer findCustomerById(Long id);-->
     <select id="findCustomerById" resultType="customer">

@@ -6,9 +6,6 @@ import com.jxh.mapper.AdminMapper;
 import com.jxh.service.IAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.DigestUtils;
-
-import java.nio.charset.StandardCharsets;
 
 /**
  * @author meizh
@@ -45,13 +42,6 @@ public class AdminServiceImpl implements IAdminService {
      */
     @Override
     public void updateAdmin(Admin admin) {
-        Admin dbadmin = adminMapper.findAdminByUsername(admin.getUsername());
-        if (dbadmin!=null){
-            String pwd= DigestUtils.md5DigestAsHex(admin.getPassword().getBytes(StandardCharsets.UTF_8));
-            admin.setPassword(pwd);
-            adminMapper.updateAdmin(admin);
-        } else {
-            throw new BusinessException("修改失败");
-        }
+        adminMapper.updateAdmin(admin);
     }
 }

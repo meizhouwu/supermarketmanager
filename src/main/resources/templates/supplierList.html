@@ -33,6 +33,8 @@
                 <li><a href="/customer/list">顾客管理</a></li>
                 <li><a href="/pwd">密码修改</a></li>
                 <li><a href="/systemLog/list">日志管理</a></li>
+                <li><a href="/category/list">商品分类管理</a> </li>
+                <li><a href="/product/list">商品管理</a></li>
                 <li><a href="/logout">退出系统</a></li>
             </ul>
         </nav>
@@ -43,10 +45,12 @@
             <span>供应商管理页面</span>
         </div>
         <div class="search">
-            <span>供应商名称：</span>
-            <input type="text" placeholder="请输入供应商的名称"/>
-            <input type="button" value="查询"/>
-            <a href="/supplier/toAdd">添加供应商</a>
+            <form action="/supplier/list">
+                <span>供应商名称：</span>
+                <input type="text" name="name" placeholder="请输入供应商的名称"/>
+                <input type="submit" value="查询"/>
+                <a href="/supplier/toAdd">添加供应商</a>
+            </form>
         </div>
         <!--供应商操作表格-->
         <table class="providerTable" cellpadding="0" cellspacing="0">

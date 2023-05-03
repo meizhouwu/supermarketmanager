@@ -28,12 +28,12 @@
         <h2 class="leftH2"><span class="span1"></span>功能列表 <span></span></h2>
         <nav>
             <ul class="list">
-                <li id="active"><a href="/order/list">订单管理</a></li>
-                <li><a href="/supplier/list">供应商管理</a></li>
+                <li><a href="/order/list">订单管理</a></li>
+                <li ><a href="/supplier/list">供应商管理</a></li>
                 <li><a href="/customer/list">顾客管理</a></li>
                 <li><a href="/pwd">密码修改</a></li>
                 <li><a href="/systemLog/list">日志管理</a></li>
-                <li><a href="/category/list">商品分类管理</a> </li>
+                <li id="active"><a href="/category/list">商品分类管理</a> </li>
                 <li><a href="/product/list">商品管理</a></li>
                 <li><a href="/logout">退出系统</a></li>
             </ul>
@@ -42,22 +42,29 @@
     <div class="right">
         <div class="location">
             <strong>你现在所在的位置是:</strong>
-            <span>管理页面 >> 信息查看</span>
+            <span>商品分类管理页面 >> 商品分类修改页面</span>
         </div>
-        <div class="providerView">
-            <p><strong>订单编号：</strong><span th:text="${one.order_sn}">231</span></p>
-            <p><strong>创建时间：</strong><span th:text="${#dates.format(one.create_time, 'yyyy/MM/dd HH:mm')}">123</span></p>
-            <p><strong>实际价格：</strong><span th:text="${one.total_price}">北极</span></p>
-<!--            <p><strong>支付状态：</strong><span th:text="${one.state}">22</span></p>-->
-            <p>
-                <strong>支付状态：</strong>
-                <span th:text="${one.state}=='1'?'已完成':(${one.state}=='0'?'待支付':'已取消')">22</span>
-            </p>
-            <p><strong>顾客：</strong><span th:text="${one.customer}">22</span></p>
-
-
-            <a href="/order/list">返回</a>
+        <div class="providerAdd">
+            <form action="/category/update" method="post">
+                <!--div的class 为error是验证错误，ok是验证成功-->
+                <div class="">
+                    <label for="name">商品分类名称：</label>
+                    <input type="text" name="name" id="name" th:value="${one.name}" required/>
+                </div>
+                <div>
+                    <label for="desc">商品分类描述：</label>
+                    <input type="text" name="desc" id="desc" th:value="${one.desc}" required/>
+                </div>
+                <input type="hidden" name="id" th:value="${one.id}"/>
+                <div class="providerAddBtn">
+                    <!--<a href="#">保存</a>-->
+                    <!--<a href="customerList.html">返回</a>-->
+                    <input type="submit" value="保存" style="line-height: 15px;"/>
+                    <input type="button" value="返回" onclick="history.back(-1)"/>
+                </div>
+            </form>
         </div>
+
     </div>
 </section>
 <footer class="footer">

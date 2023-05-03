@@ -32,6 +32,8 @@
                     <li><a href="/customer/list">顾客管理</a></li>
                     <li><a href="/pwd">密码修改</a></li>
                     <li><a href="/systemLog/list">日志管理</a></li>
+                    <li><a href="/category/list">商品分类管理</a> </li>
+                    <li><a href="/product/list">商品管理</a></li>
                     <li><a href="/logout">退出系统</a></li>
                 </ul>
             </nav>
@@ -42,25 +44,29 @@
                 <span>订单管理页面</span>
             </div>
             <div class="search">
-                <span>商品名称：</span>
-                <input type="text" placeholder="请输入商品的名称"/>
-                
-                <span>供应商：</span>
-                <select name="tigong" >
-                    <option value="">--请选择--</option>
-                    <option value="">北京市粮油总公司</option>
-                    <option value="">邯郸市五得利面粉厂</option>
-                </select>
+                <form action="/order/list">
+                    <span>订单编号：</span>
+                    <input type="text" name="order_sn" placeholder="请输入订单的编号"/>
 
-                <span>是否付款：</span>
-                <select name="fukuan">
-                    <option value="">--请选择--</option>
-                    <option value="">已付款</option>
-                    <option value="">未付款</option>
-                </select>
+                    <span>所属顾客：</span>
+                    <select name="customer_id">
+                        <option value="">请选择</option>
+                        <option th:each="c:${cList}"
+                                th:value="${c.id}" th:text="${c.name}">
+                        </option>
+                    </select>
 
-                <input type="button" value="查询"/>
-                <a href="/order/toAdd">添加订单</a>
+                    <span>订单状态：</span>
+                    <select name="state">
+                        <option value="">请选择</option>
+                        <option value="1">已完成</option>
+                        <option value="0">待支付</option>
+                        <option value="-1">已取消</option>
+                    </select>
+
+                    <input type="submit" value="查询"/>
+                    <a href="/order/toAdd">添加订单</a>
+                </form>
             </div>
             <!--表格 样式和供应商公用-->
             <table class="providerTable" cellpadding="0" cellspacing="0">
@@ -76,7 +82,11 @@
                     <td th:text="${o.order_sn}">213</td>
                     <td th:text="${#dates.format(o.create_time, 'yyyy/MM/dd HH:mm')}">123</td>
                     <td th:text="${o.total_price}">北京市粮油总公司</td>
-                    <td th:text="${o.state}">22.00</td>
+                    <td>
+                        <span th:if="${o.state==1}" th:text="已完成" style="color:green;"></span>
+                        <span th:if="${o.state==0}" th:text="待支付" style="color:sandybrown;"></span>
+                        <span th:if="${o.state==-1}" th:text="已取消" style="color:red;"></span>
+                    </td>
                     <td th:text="${o.customer}">未付款</td>
                     <td>
                         <a th:href="@{/order/view(id=${o.id})}"><img src="img/read.png" alt="查看" title="查看"/></a>

@@ -12,7 +12,7 @@ public interface ICustomerService {
     /**
      * 查询所有顾客信息
      */
-    List<Customer> getCustomerList();
+    List<Customer> getCustomerList(String name);
 
     /**
      * 查询顾客信息通过id

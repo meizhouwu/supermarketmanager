@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义mapper接口路径 -->
+<mapper namespace="com.jxh.mapper.CategoryMapper">
+    <!--id的值保证Mapper接口的方法名一值-->
+
+<!--    List<Category> getCategoryList();-->
+    <select id="getCategoryList" resultType="category" parameterType="java.lang.String">
+        select *
+        from t_category
+        <where>
+            <if test="name != null and name != ''">
+                and name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+
+
+
+<!--    Category findCategoryById(Long id);-->
+    <select id="findCategoryById" resultType="category">
+        select *
+        from t_category
+        where id=#{id};
+    </select>
+
+<!--    void addCategory(Category category);-->
+    <insert id="addCategory">
+        insert into t_category (name, `desc`)
+        values (#{name},#{desc});
+    </insert>
+
+<!--    void updateCategory(Category category);-->
+    <update id="updateCategory">
+        update t_category
+        set name = #{name},`desc`=#{desc}
+        where id=#{id};
+    </update>
+
+<!--    void deleteCategory(Long id);-->
+    <delete id="deleteCategory">
+        delete
+        from t_category
+        where id=#{id};
+    </delete>
+
+
+
+
+
+</mapper>
